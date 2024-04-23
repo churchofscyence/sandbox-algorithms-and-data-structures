@@ -1,62 +1,53 @@
-function swap(_baseArr,_baseIndex,_offsetIndex){
+function swap(_baseArr,_offsetIndex){
     var temp;
 
-     temp = _baseArr[_baseIndex];
-     _baseArr[_baseIndex] = _baseArr[_offsetIndex];
-     _baseArr[_offsetIndex] = temp;
+     temp = _baseArr[_offsetIndex];
+     _baseArr[_offsetIndex] = _baseArr[_offsetIndex +1];
+     _baseArr[_offsetIndex + 1] = temp;
 
       return _baseArr;
 
 }
 
-function bubbleSort(arr){
-    var swapped;
 
-    for(var mainIndex = 0; mainIndex < arr.length - 1; mainIndex++){
-    
-            console.log(`_____________________________________`);
+let logging;
 
-            for(var offset = 1 + mainIndex; offset < arr.length; offset++){
-                
-        
-                if (arr[offset] < arr[mainIndex]) {
-                    arr = swap(arr, mainIndex, offset);
-                    swapped = true;
-                    console.log(`Action: SWAP`);
-                }else{
-                    console.log(`Action: NO SWAP`);
-                }
+function bubbleSort(arr) {
 
-                console.log(`Main Index ${ mainIndex } Offset ${ offset } Array ${ arr.join() }`);
+    for (var mainIndex = 0; mainIndex < arr.length; mainIndex++) {
 
+        logging.push({  Action:"ITERATION"});
+
+        // Last i elements are already in place  
+        for (var offset = 0; offset < (arr.length - mainIndex - 1); offset++) {
+
+            let newMessge = "";
+            let tempPresentArray = arr.slice()
+
+            // Checking if the item at present iteration 
+            // is greater than the next iteration
+            if (arr[offset] > arr[offset + 1]) {
+
+                // If the condition is true
+                // then swap them
+                arr = swap(arr,offset);
+
+                newMessge = 'SWAP';
+            }else{
+                newMessge = 'NO SWAP';
             }
-         
+
+
+            logging.push({  Action:"CHECK_SWAPPING",
+                                messge:newMessge,
+                                offset:offset,
+                                offsetPlusOne:offset +1,
+                                presentArray:tempPresentArray});
+        }
     }
 
+    // Print the sorted array
+    return arr;
 }
-    
- 
 
  
-// Driver program
-/*
-console.log(`======================================`);
-var arr = [ 4, 3, 2, 1, 0 ];
-console.log(`Initial Array: ${ arr.join() } `);
-
-bubbleSort(arr);
-
-console.log(`======================================`);
-console.log( ` Sorted Array : ${ arr.join() } ` );
-
-
-console.log(`======================================`);
-var arr = [ 0, 1, 4, 3, 2  ];
-console.log(`Initial Array: ${ arr.join() } `);
-
-bubbleSort(arr);
-
-console.log(`======================================`);
-console.log( ` Sorted Array : ${ arr.join() } ` );
-*/
-
